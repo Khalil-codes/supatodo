@@ -11,7 +11,7 @@ export default async function Index() {
       <div className="space-x-4">
         <a
           className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-          href="/login">
+          href="/auth/login">
           Get Started
         </a>
         <a

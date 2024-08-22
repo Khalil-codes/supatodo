@@ -41,9 +41,9 @@ export async function updateSession(request: NextRequest) {
   if (!user && request.nextUrl.pathname.startsWith("/todos")) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = "/auth/login";
     return NextResponse.redirect(url);
-  } else if (user && request.nextUrl.pathname.startsWith("/login")) {
+  } else if (user && request.nextUrl.pathname.startsWith("/auth/")) {
     // if there is a user, redirect the user to the home page
     const url = request.nextUrl.clone();
     url.pathname = "/todos";

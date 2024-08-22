@@ -16,7 +16,7 @@ export const emailLogin = async (formData: FormData) => {
   });
 
   if (error) {
-    redirect("/login?message=Cannot authenticate user");
+    redirect("/auth/login?message=Cannot authenticate user");
   }
 
   revalidatePath("/", "layout");
@@ -32,7 +32,7 @@ export const signup = async (formData: FormData) => {
   const { error } = await supabase.auth.signUp({ email, password });
 
   if (error) {
-    redirect("/login?message=Error signing up the user");
+    redirect("/auth/login?message=Error signing up the user");
   }
 
   revalidatePath("/", "layout");
@@ -45,5 +45,5 @@ export const logout = async () => {
   await supabase.auth.signOut();
 
   revalidatePath("/", "layout");
-  redirect("/login");
+  redirect("/auth/login");
 };

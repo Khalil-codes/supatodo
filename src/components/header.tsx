@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { createClient } from "@/lib/supabase/server";
-import { logout } from "@/app/login/actions";
+import { logout } from "@/app/auth/login/actions";
 
 export default async function Header() {
   const supabse = createClient();
@@ -30,7 +30,7 @@ export default async function Header() {
             </>
           ) : (
             <Button asChild>
-              <Link href="/login">Sign In</Link>
+              <Link href="/auth/login">Sign In</Link>
             </Button>
           )}
           <ThemeToggle />
