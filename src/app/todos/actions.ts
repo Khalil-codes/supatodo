@@ -25,3 +25,42 @@ export const createTodo = async (formData: FormData) => {
 
   revalidatePath("/todos");
 };
+
+export const deleteTodo = async (id: string) => {
+  const supabase = createClient();
+
+  const { error } = await supabase.from("todos").delete().eq("id", id);
+  if (error) {
+    console.log("Error occurred whild deleting todo", error);
+    throw Error("Deletion Failed");
+  }
+
+  revalidatePath("/todos");
+};
+
+export const updateTodo = async (id: string, text: string) => {
+  const supabase = createClient();
+
+  const { error } = await supabase.from("todos").update({ text }).eq("id", id);
+
+  if (error) {
+    console.log("Error occurred whild updating todo", error);
+    throw Error("Update Failed");
+  }
+
+  revalidatePath("/todos");
+};
+
+export const toggleCheck = async (id: string, checked: boolean) => {
+  console.log("Running the server action");
+  const supabase = createClient();
+  const { error } = await supabase
+    .from("todos")
+    .update({ is_completed: checked })
+    .eq("id", id);
+  if (error) {
+    console.log("Error occurred whild updating todo", error);
+    throw Error("Update Failed");
+  }
+  revalidatePath("/todos");
+};
