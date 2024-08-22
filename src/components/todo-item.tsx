@@ -8,16 +8,29 @@ import { cn } from "@/lib/utils";
 import { Todo } from "@/types/custom";
 import { Trash2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
+import { OptimisticTodoAction } from "./todo-list";
 
-export function TodoItem({ todo }: { todo: Todo }) {
+export function TodoItem({
+  todo,
+  optimisticTodoAction,
+}: {
+  todo: Todo;
+  optimisticTodoAction: OptimisticTodoAction;
+}) {
   return (
     <form>
-      <TodoCard todo={todo} />
+      <TodoCard todo={todo} optimisticTodoAction={optimisticTodoAction} />
     </form>
   );
 }
 
-export function TodoCard({ todo }: { todo: Todo }) {
+export function TodoCard({
+  todo,
+  optimisticTodoAction,
+}: {
+  todo: Todo;
+  optimisticTodoAction: OptimisticTodoAction;
+}) {
   const { pending } = useFormStatus();
   return (
     <Card className={cn("w-full", { "opacity-50": pending })} key={todo.id}>
@@ -36,7 +49,10 @@ export function TodoCard({ todo }: { todo: Todo }) {
           variant="ghost"
           size="icon"
           disabled={pending}
-          formAction={async () => await deleteTodo(todo.id)}>
+          formAction={async () => {
+            optimisticTodoAction({ action: "delete", todo });
+            await deleteTodo(todo.id);
+          }}>
           <Trash2 className="h-5 w-5" />
           <span className="sr-only">Delete Todo</span>
         </Button>
