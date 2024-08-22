@@ -1,8 +1,14 @@
 import { TodoList } from "@/components/todo-list";
 import { Separator } from "@/components/ui/separator";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function TodosPage() {
-  const todos = ["This is a todo"];
+  const supabase = createClient();
+
+  const { data: todos } = await supabase
+    .from("todos")
+    .select("*")
+    .order("created_at", { ascending: false });
 
   return (
     <section className="container mx-auto flex w-full max-w-2xl flex-col gap-4 p-3 pt-6">
