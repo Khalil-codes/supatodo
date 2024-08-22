@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { Todo } from "@/types/custom";
 import { Trash2 } from "lucide-react";
+import { useFormStatus } from "react-dom";
 
 export function TodoItem({ todo }: { todo: Todo }) {
   return (
@@ -17,11 +18,13 @@ export function TodoItem({ todo }: { todo: Todo }) {
 }
 
 export function TodoCard({ todo }: { todo: Todo }) {
+  const { pending } = useFormStatus();
   return (
-    <Card className={cn("w-full")} key={todo.id}>
+    <Card className={cn("w-full", { "opacity-50": pending })} key={todo.id}>
       <CardContent className="flex items-start gap-3 p-3">
         <span className="flex size-10 items-center justify-center">
           <Checkbox
+            disabled={pending}
             defaultChecked={!!todo.is_completed}
             onCheckedChange={async (checked) => {
               await toggleCheck(todo.id, Boolean(checked));
@@ -32,6 +35,7 @@ export function TodoCard({ todo }: { todo: Todo }) {
         <Button
           variant="ghost"
           size="icon"
+          disabled={pending}
           formAction={async () => await deleteTodo(todo.id)}>
           <Trash2 className="h-5 w-5" />
           <span className="sr-only">Delete Todo</span>
