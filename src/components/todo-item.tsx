@@ -33,7 +33,12 @@ export function TodoCard({
 }) {
   const { pending } = useFormStatus();
   return (
-    <Card className={cn("w-full", { "opacity-50": pending })} key={todo.id}>
+    <Card
+      className={cn("w-full", {
+        "bg-green-600/50 line-through": todo.is_completed,
+        "bg-red-700/50": pending,
+      })}
+      key={todo.id}>
       <CardContent className="flex items-start gap-3 p-3">
         <span className="flex size-10 items-center justify-center">
           <Checkbox
