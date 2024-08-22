@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { emailLogin, signup } from "./actions";
 
 export default function Login({
   searchParams,
@@ -15,7 +16,7 @@ export default function Login({
   searchParams: { message: string };
 }) {
   return (
-    <section className="h-[calc(100vh-57px)] flex justify-center items-center">
+    <section className="flex h-[calc(100vh-57px)] items-center justify-center">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
@@ -24,7 +25,7 @@ export default function Login({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form id="login-form" className="grid gap-4">
+          <form id="login-form" className="grid gap-4" autoComplete={"off"}>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -33,6 +34,7 @@ export default function Login({
                 type="email"
                 placeholder="m@example.com"
                 required
+                autoComplete="off"
               />
             </div>
             <div className="grid gap-2">
@@ -44,7 +46,9 @@ export default function Login({
                 name="password"
                 id="password"
                 type="password"
+                placeholder="* * * * * * * *"
                 required
+                autoComplete="new-password"
               />
             </div>
             {searchParams.message && (
@@ -52,11 +56,13 @@ export default function Login({
                 {searchParams.message}
               </div>
             )}
-            <Button className="w-full">Login</Button>
+            <Button formAction={emailLogin} className="w-full">
+              Login
+            </Button>
           </form>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <button form="login-form" className="underline">
+            <button formAction={signup} form="login-form" className="underline">
               Sign up
             </button>
           </div>
