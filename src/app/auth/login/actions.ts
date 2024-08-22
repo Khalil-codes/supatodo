@@ -3,6 +3,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { Provider } from "@supabase/supabase-js";
+import { getURL } from "@/utils/helpers";
 
 export const emailLogin = async (formData: FormData) => {
   const supabase = createClient();
@@ -46,4 +48,22 @@ export const logout = async () => {
 
   revalidatePath("/", "layout");
   redirect("/auth/login");
+};
+
+export const oauthLogin = async (provider: Provider) => {
+  if (!provider) {
+    redirect("/auth/login?message=Provider not found");
+  }
+  const supabase = createClient();
+  const redirectURL = getURL("/auth/callback");
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: provider,
+    options: { redirectTo: redirectURL },
+  });
+
+  if (error) {
+    redirect("/auth/login?message=Error signing in the user");
+  }
+  redirect(data.url);
 };

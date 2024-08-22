@@ -9,6 +9,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { emailLogin, signup } from "./actions";
+import OAuth from "./oauth";
 
 export default function Login({
   searchParams,
@@ -24,7 +25,7 @@ export default function Login({
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="grid grid-flow-row gap-4">
           <form id="login-form" className="grid gap-4" autoComplete={"off"}>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -60,7 +61,8 @@ export default function Login({
               Login
             </Button>
           </form>
-          <div className="mt-4 text-center text-sm">
+          <OAuth />
+          <div className="text-center text-sm">
             Don&apos;t have an account?{" "}
             <button formAction={signup} form="login-form" className="underline">
               Sign up
