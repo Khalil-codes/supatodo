@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/src/lib/utils";
+import { cn } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 
 export function TodoItem({ todo }: { todo: string }) {
